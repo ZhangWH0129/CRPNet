@@ -20,12 +20,12 @@ import random
 import torch.multiprocessing as mp
 
 def get(rank, world_size):
-    # 初始化分布式进程组
+    
     dist.init_process_group(backend='nccl', init_method='env://', world_size=world_size, rank=rank)
-    # ... 你的训练逻辑 ...
+    
 
 def do():
-    world_size = 4  # 要启动的进程数
+    world_size = 4  
     mp.spawn(get, args=(world_size,), nprocs=world_size, join=True)
 
 def same_seeds(seed):
@@ -81,12 +81,11 @@ def main():
     '''
     Initialize model
     '''
-    #多卡训练
+    
     model = CRPNet()
     reg_model = utils.register_model(img_size, 'nearest')
-    #********************************************************************8
     GPU_iden= 0
-    #********************************************************************8
+    
     torch.cuda.set_device(GPU_iden)
     # if torch.cuda.device_count() > 1:
     #     print(f"Using {torch.cuda.device_count()} GPUs!")
@@ -181,7 +180,7 @@ def main():
             data = [t.cuda() for t in data]
             move = data[0]
             fix = data[1] ## y = fix
-            #分布式训练
+           
             # data[0] = data[0].to(local_rank)
             # fix = data[0]
             # data[1] = data[1].to(local_rank)
@@ -242,7 +241,7 @@ def main():
                 fix = data[1]
                 move_seg = data[2]
                 fix_seg = data[3]
-                # output[0]是图，【1】是变形场
+                
                 output = model(move, fix )
                 def_out = reg_model([move_seg.cuda().float(), output[1].cuda()])
                 dsc = utils.dice_val_VOI(def_out.long(), fix_seg.long())
