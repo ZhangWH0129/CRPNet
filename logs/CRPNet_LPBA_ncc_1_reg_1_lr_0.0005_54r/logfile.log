@@ -1,0 +1,78 @@
+Training Starts epoch 0
+Iter 1 of 8 loss -0.0707, Img Sim: -0.070738, Reg: 0.000000
+Iter 2 of 8 loss 0.1241, Img Sim: -0.017082, Reg: 0.141208
+Iter 3 of 8 loss 0.0908, Img Sim: -0.015664, Reg: 0.106493
+Iter 4 of 8 loss 0.0735, Img Sim: -0.010839, Reg: 0.084334
+Iter 5 of 8 loss 0.0713, Img Sim: -0.018110, Reg: 0.089381
+Iter 6 of 8 loss 0.0860, Img Sim: -0.010298, Reg: 0.096255
+Iter 7 of 8 loss 0.0185, Img Sim: -0.016063, Reg: 0.034549
+Training Starts epoch 0
+Iter 1 of 56 loss -0.0707, Img Sim: -0.070738, Reg: 0.000000
+Iter 2 of 56 loss 0.1287, Img Sim: -0.012410, Reg: 0.141124
+Iter 3 of 56 loss 0.0866, Img Sim: -0.013417, Reg: 0.099997
+Iter 4 of 56 loss 0.0889, Img Sim: -0.010064, Reg: 0.098995
+Iter 5 of 56 loss 0.0984, Img Sim: -0.017912, Reg: 0.116323
+Iter 6 of 56 loss 0.0327, Img Sim: -0.015228, Reg: 0.047960
+Iter 7 of 56 loss 0.0265, Img Sim: -0.012506, Reg: 0.039045
+Iter 8 of 56 loss 0.0154, Img Sim: -0.014701, Reg: 0.030110
+Iter 9 of 56 loss 0.0053, Img Sim: -0.016935, Reg: 0.022279
+Iter 10 of 56 loss -0.0033, Img Sim: -0.020501, Reg: 0.017201
+Iter 11 of 56 loss 0.0174, Img Sim: -0.018626, Reg: 0.036058
+Iter 12 of 56 loss -0.0078, Img Sim: -0.022024, Reg: 0.014250
+Iter 13 of 56 loss -0.0112, Img Sim: -0.024279, Reg: 0.013037
+Iter 14 of 56 loss -0.0121, Img Sim: -0.021928, Reg: 0.009791
+Iter 15 of 56 loss -0.0137, Img Sim: -0.022353, Reg: 0.008662
+Iter 16 of 56 loss -0.0192, Img Sim: -0.027426, Reg: 0.008255
+Iter 17 of 56 loss -0.0220, Img Sim: -0.029494, Reg: 0.007530
+Iter 18 of 56 loss -0.0228, Img Sim: -0.029501, Reg: 0.006703
+Iter 19 of 56 loss -0.0214, Img Sim: -0.027493, Reg: 0.006132
+Iter 20 of 56 loss -0.0300, Img Sim: -0.036609, Reg: 0.006559
+Iter 21 of 56 loss -0.0279, Img Sim: -0.034156, Reg: 0.006302
+Iter 22 of 56 loss -0.0276, Img Sim: -0.033906, Reg: 0.006298
+Iter 23 of 56 loss -0.0279, Img Sim: -0.034947, Reg: 0.007038
+Iter 24 of 56 loss -0.0344, Img Sim: -0.041757, Reg: 0.007313
+Iter 25 of 56 loss -0.0322, Img Sim: -0.040406, Reg: 0.008198
+Iter 26 of 56 loss -0.0348, Img Sim: -0.044370, Reg: 0.009551
+Iter 27 of 56 loss -0.0475, Img Sim: -0.059234, Reg: 0.011765
+Iter 28 of 56 loss -0.0395, Img Sim: -0.051517, Reg: 0.011978
+Iter 29 of 56 loss -0.0391, Img Sim: -0.052797, Reg: 0.013657
+Iter 30 of 56 loss -0.0433, Img Sim: -0.060015, Reg: 0.016671
+Iter 31 of 56 loss -0.0578, Img Sim: -0.075708, Reg: 0.017922
+Iter 32 of 56 loss -0.0591, Img Sim: -0.077900, Reg: 0.018791
+Iter 33 of 56 loss -0.0584, Img Sim: -0.078416, Reg: 0.020033
+Iter 34 of 56 loss -0.0788, Img Sim: -0.101864, Reg: 0.023114
+Iter 35 of 56 loss -0.0803, Img Sim: -0.101281, Reg: 0.020960
+Iter 36 of 56 loss -0.0958, Img Sim: -0.117540, Reg: 0.021763
+Iter 37 of 56 loss -0.1072, Img Sim: -0.130093, Reg: 0.022864
+Iter 38 of 56 loss -0.1190, Img Sim: -0.139237, Reg: 0.020196
+Iter 39 of 56 loss -0.1227, Img Sim: -0.143255, Reg: 0.020515
+Iter 40 of 56 loss -0.1093, Img Sim: -0.134246, Reg: 0.024974
+Iter 41 of 56 loss -0.1348, Img Sim: -0.157087, Reg: 0.022252
+Iter 42 of 56 loss -0.1022, Img Sim: -0.121168, Reg: 0.018966
+Iter 43 of 56 loss -0.0919, Img Sim: -0.111127, Reg: 0.019277
+Iter 44 of 56 loss -0.1387, Img Sim: -0.158290, Reg: 0.019604
+Iter 45 of 56 loss -0.1209, Img Sim: -0.143396, Reg: 0.022528
+Iter 46 of 56 loss -0.1066, Img Sim: -0.130208, Reg: 0.023656
+Iter 47 of 56 loss -0.1212, Img Sim: -0.141689, Reg: 0.020502
+Iter 48 of 56 loss -0.1273, Img Sim: -0.145173, Reg: 0.017901
+Iter 49 of 56 loss -0.1156, Img Sim: -0.133831, Reg: 0.018207
+Iter 50 of 56 loss -0.1242, Img Sim: -0.142282, Reg: 0.018033
+Iter 51 of 56 loss -0.1215, Img Sim: -0.143626, Reg: 0.022131
+Iter 52 of 56 loss -0.1453, Img Sim: -0.165604, Reg: 0.020284
+Iter 53 of 56 loss -0.1392, Img Sim: -0.157228, Reg: 0.017996
+Iter 54 of 56 loss -0.1404, Img Sim: -0.161224, Reg: 0.020861
+Iter 55 of 56 loss -0.1321, Img Sim: -0.153356, Reg: 0.021238
+Iter 56 of 56 loss -0.1439, Img Sim: -0.165536, Reg: 0.021681
+CRPNet_LPBA_ncc_1_reg_1_lr_0.0005_54r/ Epoch 0 loss -0.0533
+0 : 0.5997242697099832
+0 : 0.6299155889412171
+0 : 0.6407748898164605
+0 : 0.5933496126547078
+0 : 0.5678510296718609
+0 : 0.5584605285896013
+0 : 0.5670328017469347
+0 : 0.572263327158294
+0 : 0.5809901329510359
+0 : 0.5828027546783698
+0 : 0.5878046751591068
+0 : 0.5903941984544832
