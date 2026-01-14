@@ -199,18 +199,8 @@ class OASISBrainvalDatasetS2S(Dataset):
         path_y = self.paths[y_index]
         x, x_seg = pkload(path_x)
         y, y_seg = pkload(path_y)
-        # fix = x_seg
-        # min_val = fix.min()
-        # max_val = fix.max()
-        # u = np.unique(fix)
-        # print(f"fix张量的最小值: {min_val.item()}")
-        # print(f"张量的最大值: {max_val.item()}")
-        # print(f"张量的值: ", u)
-        #print(x.shape)
-        #print(x.shape)
-        #print(np.unique(y))
-        # print(x.shape, y.shape)#(240, 240, 155) (240, 240, 155)
-        # transforms work with nhwtc
+        
+        
         x, y = x[None, ...], y[None, ...]
         x_seg, y_seg = x_seg[None, ...], y_seg[None, ...]
         x, x_seg = self.transforms([x, x_seg])
@@ -242,11 +232,7 @@ class OASISBrainDatasetS2S(Dataset):
         path_y = self.paths[y_index]
         x, x_seg = pkload(path_x)
         y, y_seg = pkload(path_y)
-        #print(x.shape)
-        #print(x.shape)
-        #print(np.unique(y))
-        # print(x.shape, y.shape)#(240, 240, 155) (240, 240, 155)
-        # transforms work with nhwtc
+       
         x, y = x[None, ...], y[None, ...]
         # print(x.shape, y.shape)#(1, 240, 240, 155) (1, 240, 240, 155)
         x,y = self.transforms([x, y])
@@ -287,13 +273,7 @@ class IXIBrainInferDatasetS2S(Dataset):
         y, y_seg = pkload(path)
         x, y = x[None, ...], y[None, ...]
         x_seg, y_seg= x_seg[None, ...], y_seg[None, ...]
-        # fix = x_seg
-        # min_val = fix.min()
-        # max_val = fix.max()
-        # u = np.unique(fix)
-        # print(f"fix张量的最小值: {min_val.item()}")
-        # print(f"张量的最大值: {max_val.item()}")
-        # print(f"张量的值: ", u)
+       
         x, x_seg = self.transforms([x, x_seg])
         y, y_seg = self.transforms([y, y_seg])
         x = np.ascontiguousarray(x)# [Bsize,channelsHeight,,Width,Depth]
@@ -301,13 +281,7 @@ class IXIBrainInferDatasetS2S(Dataset):
         x_seg = np.ascontiguousarray(x_seg)  # [Bsize,channelsHeight,,Width,Depth]
         y_seg = np.ascontiguousarray(y_seg)
         x, y, x_seg, y_seg = torch.from_numpy(x), torch.from_numpy(y), torch.from_numpy(x_seg), torch.from_numpy(y_seg)
-        # fix = x_seg
-        # min_val = fix.min()
-        # max_val = fix.max()
-        # u =torch.unique(fix)
-        # print(f"fix张量的最小值: {min_val.item()}")
-        # print(f"张量的最大值: {max_val.item()}")
-        # print(f"张量的值: ", u)
+        
         return x, y, x_seg, y_seg
 
     def __len__(self):
