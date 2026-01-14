@@ -30,7 +30,7 @@ class SpatialTransformer(nn.Module):
     def forward(self, src, flow):
         # new locations
         new_locs = self.grid + flow
-        shape = flow.shape[2:]#如果一个数组的形状是 (5, 4, 3, 2)，则 shape[2:] 将选择索引为2及其之后的维度，即 (3, 2)，而 shape[:2] 将选择索引为0和1的维度，即 (5, 4)。
+        shape = flow.shape[2:]
 
         # need to normalize grid values to [-1, 1] for resampler
         for i in range(len(shape)):
@@ -154,27 +154,7 @@ class NCC_vxm(torch.nn.Module):
 
 
 def dice_loss_VOI(y_pred, y_true, smooth=1e-5):
-    """
-    针对特定VOI标签（1-13）计算Dice损失，用于模型优化（可反向传播）
-    损失计算逻辑：1 - 平均Dice系数（系数越大，损失越小，符合优化目标）
 
-    Args:
-        y_pred: 模型预测输出，shape为 [B, 1, H, W, D]（B=批量，1=通道，H/W/D=空间维度）
-                注：若预测是概率图（如sigmoid输出），需确保值在[0,1]；若为logits，需先过sigmoid
-        y_true: 真实标签，shape与y_pred一致，值为0（背景）或VOI标签（1-13）
-        smooth: 平滑项，避免分母为0（默认1e-5，可根据数据调整）
-
-    Returns:
-        dice_loss: 平均Dice损失，shape为 [1]（标量损失，可直接用于backward()）
-    """
-    # 1. 定义需要计算的VOI标签（与原评估函数一致：1-13）
-
-    # min_val = y_pred.min()
-    # max_val = y_pred.max()
-    # u = torch.unique(y_pred)
-    # print(f"outpu张量的最小值: {min_val.item()}")
-    # print(f"张量的最大值: {max_val.item()}")
-    # print(f"张量的值: ", u)
 
     VOI_lbls = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11,
                 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23,
@@ -182,36 +162,32 @@ def dice_loss_VOI(y_pred, y_true, smooth=1e-5):
                 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47,
                 48, 49, 50, 51, 52, 53, 54]
     #VOI_lbls = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
-    device = y_pred.device  # 确保张量在同一设备（CPU/GPU）
+    device = y_pred.device 
 
-    # 2. 若预测是logits（未经过sigmoid），先转为概率图（确保值在[0,1]，符合标签分布）
-    # 注：若模型输出已过sigmoid，可注释这行
+   
     y_pred = torch.sigmoid(y_pred)
 
-    # 3. 初始化存储每个VOI标签的Dice系数列表
+   
     dice_coeffs = []
 
-    # 4. 遍历每个VOI标签，计算单独的Dice系数
+    
     for lbl in VOI_lbls:
-        # 4.1 提取当前标签的预测掩码和真实掩码（批量内所有样本）
-        # y_pred_lbl: 预测中属于当前标签的概率（shape [B,1,H,W,D]）
-        # y_true_lbl: 真实标签中属于当前标签的二值掩码（0/1，shape [B,1,H,W,D]）
-        y_pred_lbl = y_pred * (y_true == lbl).float()  # 仅保留当前标签的预测值
-        y_true_lbl = (y_true == lbl).float()  # 真实标签转为二值张量
+       
+        y_pred_lbl = y_pred * (y_true == lbl).float()  
+        y_true_lbl = (y_true == lbl).float()  
 
-        # 4.2 计算Dice系数（批量内平均，避免因样本数影响损失）
-        # 分子：2 * 预测与真实的交集和（批量内所有元素求和）
-        intersection = 2 * torch.sum(y_pred_lbl * y_true_lbl, dim=[1, 2, 3, 4])  # 按样本维度求和，shape [B]
-        # 分母：预测和 + 真实和（避免分母为0，加smooth）
-        union = torch.sum(y_pred_lbl, dim=[1, 2, 3, 4]) + torch.sum(y_true_lbl, dim=[1, 2, 3, 4])  # shape [B]
-        # 单个标签的Dice系数（批量内平均，smooth确保数值稳定）
+      
+        intersection = 2 * torch.sum(y_pred_lbl * y_true_lbl, dim=[1, 2, 3, 4])  
+      
+        union = torch.sum(y_pred_lbl, dim=[1, 2, 3, 4]) + torch.sum(y_true_lbl, dim=[1, 2, 3, 4])  
+       
         dice = (intersection + smooth) / (union + smooth)  # shape [B]
-        dice_coeffs.append(dice)  # 收集当前标签的批量Dice系数
+        dice_coeffs.append(dice)  
 
-    # 5. 计算平均Dice系数（所有VOI标签的批量平均再取均值）
-    avg_dice = torch.mean(torch.stack(dice_coeffs, dim=0), dim=[0, 1])  # 先按标签堆叠，再求标签+批量平均
+   
+    avg_dice = torch.mean(torch.stack(dice_coeffs, dim=0), dim=[0, 1]) 
 
-    # 6. 转为Dice损失（1 - 平均Dice系数：系数越大，损失越小，符合优化目标）
+
     dice_loss = 1 - avg_dice
 
     return dice_loss
