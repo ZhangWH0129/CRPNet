@@ -55,7 +55,7 @@ class SpatialTransformer(nn.Module):
     def forward(self, src, flow):
         # new locations
         new_locs = self.grid + flow
-        shape = flow.shape[2:]#如果一个数组的形状是 (5, 4, 3, 2)，则 shape[2:] 将选择索引为2及其之后的维度，即 (3, 2)，而 shape[:2] 将选择索引为0和1的维度，即 (5, 4)。
+        shape = flow.shape[2:]
 
         # need to normalize grid values to [-1, 1] for resampler
         for i in range(len(shape)):
@@ -94,10 +94,10 @@ def metric_val_VOI(y_pred, y_true):
                 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35,
                 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47,
                 48, 49, 50, 51, 52, 53, 54]
-    # OASIS的DIce计算
+    # OASIS
     # VOI_lbls = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11,
     #             12, 13, 14]
-    # IXI的标签计算
+    # IXI
     # VOI_lbls = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11,
     #             12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23,
     #             24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35,
@@ -129,10 +129,10 @@ def dice_raw_VOI(y_pred, y_true):
                 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35,
                 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47,
                 48, 49, 50, 51, 52, 53, 54]
-    # OASIS的DIce计算
+    # OASIS
     # VOI_lbls = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11,
     #             12, 13, 14]
-    # IXI的标签计算
+    # IXI
     # VOI_lbls = [1]
     # VOI_lbls = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11,
     #             12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23,
@@ -141,9 +141,9 @@ def dice_raw_VOI(y_pred, y_true):
     pred = y_pred.detach().cpu().numpy()[0, 0, ...]
     true = y_true.detach().cpu().numpy()[0, 0, ...]
     num_classes = len(VOI_lbls)
-    Lists_dsc = np.zeros(num_classes)  # 形状 (54,)
-    # Lists_hd = np.zeros(num_classes)  # 形状 (54,)
-    # Lists_asd = np.zeros(num_classes)  # 形状 (54,)
+    Lists_dsc = np.zeros(num_classes) 
+    # Lists_hd = np.zeros(num_classes) 
+    # Lists_asd = np.zeros(num_classes) 
     idx = 0
     for i in VOI_lbls:
         # if i+1 in [1,2,3,4,6,8,10,13,14,15,20,23,26,29,30,31,32,33,34,35,36,37,39,40,41,42,43,44,45,46,47]:
@@ -168,19 +168,19 @@ def dice_raw_VOI(y_pred, y_true):
 
 
 def dice_val_VOI(y_pred, y_true):
-    # LPBA40的标签计算
+    # LPBA40
     VOI_lbls = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11,
               12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23,
               24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35,
                36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47,
                48, 49, 50, 51, 52, 53, 54]
-    #OASIS的DIce计算
+    #OASIS
     # VOI_lbls = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11,
     #            12, 13, 14]
     #Abdomen
     # VOI_lbls = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11,
     #            12, 13]
-    # IXI的标签计算
+    # IXI
     # VOI_lbls = [ 5, 7, 9, 11,
     #             12,  16, 17, 18, 19, 21, 22,
     #             24, 25,  27, 28,  38, ]
