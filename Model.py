@@ -17,7 +17,7 @@ import numpy as np
 
 
 class CA(nn.Module):
-    """Channel attention used in RCAN.
+    """
     Args:
         num_feat (int): Channel number of intermediate features.
         squeeze_factor (int): Channel squeeze factor. Default: 16.
@@ -1113,30 +1113,6 @@ class CRPNet(nn.Module):
         self.CrossSA_2_1 = CSABlock()
         self.CrossSA_1_1 = CSABlock()
 
-        # self.cconv_5_2 = nn.Sequential(
-        #     ConvInsBlock(4 * 8 * c, 2 * 8 * c, 3, 1),
-        #     ConvInsBlock(2 * 8 * c, 16 * c, 3, 1)
-        # )
-        #
-        # self.cconv_4_2 = nn.Sequential(
-        #     ConvInsBlock(4 * 4 * c, 2 * 4 * c, 3, 1),
-        #     ConvInsBlock(2 * 4 * c, 8 * c, 3, 1)
-        # )
-        #
-        # self.cconv_3_2 = nn.Sequential(
-        #     ConvInsBlock(2 * 4 * c, 1 * 4 * c, 3, 1),
-        #     ConvInsBlock(1 * 4 * c, 4 * c, 3, 1)
-        # )
-        #
-        # self.cconv_2_2 = nn.Sequential(
-        #     ConvInsBlock(2 * 2 * c, 1 * 2 * c, 3, 1),
-        #     ConvInsBlock(1 * 2 * c, 2 * c, 3, 1)
-        # )
-        #
-        # self.cconv_1_2 = nn.Sequential(
-        #     ConvInsBlock(4 * 1 * c, 1 * 2 * c, 3, 1),
-        #     ConvInsBlock(2 * 1 * c, 1 * c, 3, 1)
-        # )
 
         self.upsample = nn.Upsample(scale_factor=2, mode='nearest')
         self.upsample_trilin = nn.Upsample(scale_factor=2, mode='trilinear',
@@ -1182,7 +1158,7 @@ class CRPNet(nn.Module):
         flow5 = flow5_2 + flow5_3_diform
 
 
-        ### Iter stage 1
+        # Iter stage 1
         # first block
         flow5 = self.ResizeTransformer(flow5)
         warped = self.warp[3](M4, flow5)
@@ -1216,7 +1192,7 @@ class CRPNet(nn.Module):
         flow4 = flow4 + flow4_3_diform
 
 
-        ### Iter stage 2
+        # Iter stage 2
         # first block
         flow4 = self.ResizeTransformer(flow4)
         warped = self.warp[2](M3, flow4)
@@ -1250,7 +1226,7 @@ class CRPNet(nn.Module):
         flow3_3_diform = self.diff[2](flow3_3)
         flow3 = flow3 + flow3_3_diform
 
-        ### Iter stage 3
+        # Iter stage 3
         # first block
         flow3 = self.ResizeTransformer(flow3)
         warped = self.warp[1](M2, flow3)
@@ -1273,7 +1249,7 @@ class CRPNet(nn.Module):
         flow2_2_diform = self.diff[1](flow2_2)
         flow2 = flow2 + flow2_2_diform
 
-        #     # Third block
+        #      Third block
         warped = self.warp[1](M2, flow2)  # (1,128,20burjiuqudianli,24,20)
         fix_2, move_2, ADD = self.getSA4(F2, warped)
         CopyCross2 = self.cconv_2_2(torch.cat((Cross2todef, ADD), dim=1))
@@ -1283,56 +1259,23 @@ class CRPNet(nn.Module):
         flow2_3_diform = self.diff[1](flow2_3)
         flow2 = flow2 + flow2_3_diform
 
-        ### Iter stage 4
+        # Iter stage 4
         flow2 = self.ResizeTransformer(flow2)
         warped = self.warp[0](M1, flow2)
         Cross = self.cconv_1_Cross(torch.cat((warped, F1), dim=1))
         Cross1 = torch.cat((F1, warped, Cross), dim=1)
 
-        # min_val = Cross1.min()
-        # max_val = Cross1.max()
-        # u = torch.unique(Cross1)
-        # print(f"张量的最小值: {min_val.item()}")
-        # print(f"张量的最大值: {max_val.item()}")
-        # print(f"张量的值: ", u)
 
         Cross1todef = self.cconv_1_1(Cross1)
         flow1_1 = self.defconv1(Cross1todef)
 
-        # min_val = flow1_1.min()
-        # max_val = flow1_1.max()
-        # u = torch.unique(flow1_1)
-        # print(f"张量的最小值: {min_val.item()}")
-        # print(f"张量的最大值: {max_val.item()}")
-        # print(f"张量的值: ", u)
+    
 
         flow1_1_diform = self.diff[0](flow1_1)
         flow1 = flow2 + flow1_1_diform
 
-        # min_val = flow1.min()
-        # max_val = flow1.max()
-        # u = torch.unique(flow1)
-        # print(f"张量的最小值: {min_val.item()}")
-        # print(f"张量的最大值: {max_val.item()}")
-        # print(f"张量的值: ", u)
 
-        # warped = self.warp[0](M1, flow1)
-        # fix_1, move_1, ADD = self.getSA4(F1, warped)
-        # CopyCross1 = self.cconv_1_2(torch.cat((Cross1todef, ADD), dim=1))
-        # Cross1 = torch.cat((fix_1, move_1, CopyCross1), dim=1)
-        # Cross1todef = self.cconv_1_1(Cross1)
-        # # Cross1 = torch.cat((warped, F1), dim=1)
-        # # Corss1todef = self.cconv_1_1(Cross1)
-        # flow1_1 = self.defconv1(Cross1todef)
-        # flow1_1_diform = self.diff[0](flow1_1)
-        # flow1 = flow1 + flow1_1_diform
-
-        # min_val = flow1.min()
-        # max_val = flow1.max()
-        # u = torch.unique(flow1)
-        # print(f"张量的最小值: {min_val.item()}")
-        # print(f"张量的最大值: {max_val.item()}")
-        # print(f"张量的值: ", u)
+   
         wrapped = self.warp[0](moving, flow1)
 
         return wrapped, flow1
