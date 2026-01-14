@@ -179,33 +179,9 @@ def main():
             adjust_learning_rate(optimizer, epoch, max_epoch, lr)
             data = [t.cuda() for t in data]
             move = data[0]
-            fix = data[1] ## y = fix
+            fix = data[1]
            
-            # data[0] = data[0].to(local_rank)
-            # fix = data[0]
-            # data[1] = data[1].to(local_rank)
-            # move = data[1]
-            #
-            # F_fix_3, F_move_3, F_Con_fix_3, F_move_4, F_fix_4, F_Con_fix_4, move = model(fix, move)
-            # dist.send(F_fix_3, dst=1 - local_rank)
-            # dist.send(F_move_3, dst=1 - local_rank)
-            # dist.send(F_Con_fix_3, dst=1 - local_rank)
-            # dist.send(F_move_4, dst=1 - local_rank)
-            # dist.send(F_fix_4, dst=1 - local_rank)
-            # dist.send(F_Con_fix_4, dst=1 - local_rank)
-            # dist.send(move, dst=1 - local_rank)
-            #
-            # F_fix_3 = dist.recv(src=1 - local_rank)
-            # F_move_3 = dist.recv(src=1 - local_rank)
-            # F_Con_fix_3 = dist.recv(src=1 - local_rank)
-            # F_move_4 = dist.recv(src=1 - local_rank)
-            # F_fix_4 = dist.recv(src=1 - local_rank)
-            # F_Con_fix_4 = dist.recv(src=1 - local_rank)
-            # move = dist.recv(src=1 - local_rank)
-            #
-            # output = model2(F_fix_3, F_move_3, F_Con_fix_3, F_move_4, F_fix_4, F_Con_fix_4, move)
-            #output[0]is warapped, output【1】is flow
-
+            
             output = model(move,fix)
 
             loss = 0
@@ -284,19 +260,6 @@ def save_checkpoint(state, save_dir='models', filename='checkpoint.pth.tar', max
 
 
 if __name__ == '__main__':
-    '''
 
-    GPU configuration
-    '''
-    # GPU_iden = 0
-    # GPU_num = torch.cuda.device_count()
-    # print('Number of GPU: ' + str(GPU_num))
-    # for GPU_idx in range(GPU_num):
-    #     GPU_name = torch.cuda.get_device_name(GPU_idx)
-    #     print('     GPU #' + str(GPU_idx) + ': ' + GPU_name)
-    # torch.cuda.set_device(GPU_iden)
-    # GPU_avai = torch.cuda.is_available()
-    # print('Currently using: ' + torch.cuda.get_device_name(GPU_iden))
-    # print('If the GPU is available? ' + str(GPU_avai))
-    # do()
+  
     main()
