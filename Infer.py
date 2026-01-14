@@ -20,20 +20,20 @@ import torch.nn as nn
 
 
 def count_elements_in_3d_array(array):
-    # 创建一个字典来存储每个数值的出现次数
+    
     element_count = {}
 
-    # 遍历三维数组的每个元素
+   
     for layer in array:
         for row in layer:
             for element in row:
-                # 更新字典中的计数
+                
                 element_count[element] = element_count.get(element, 0) + 1
 
-                # 对字典的键进行排序
+               
     sorted_keys = sorted(element_count.keys())
 
-    # 按照排序后的键顺序输出结果
+    
     for num in sorted_keys:
         print(f"数值 {num} 出现了 {element_count[num]} 次")
 
@@ -185,7 +185,7 @@ def main():
             eval_hd.update(hd.item(), fix.size(0))
             eval_asd.update(asd.item(), fix.size(0))
 
-            #大于0的雅可比行列式
+           
             jac_det = utils.jacobian_determinant_vxm(flow.detach().cpu().numpy()[0, :, :, :, :])
             eval_det.update(np.sum(jac_det <= 0) / np.prod(tar.shape), fix.size(0))
             stdy_idx += 1
@@ -194,7 +194,7 @@ def main():
             print('asd {}'.format(eval_asd.avg))
             print(' jacobian: {}'.format(eval_det.avg))
 
-            #Dice系数
+            
             #dsc_trans = utils.dice_val_VOI(def_out.long(), fix_seg.long())
             #dsc_raw = utils.dice_val_VOI(fix_seg.long(), move_seg.long())  #dice_val_VOI用于计算Dice
             # #
